@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 class Sudoku{
 	constructor(board_string){
@@ -76,27 +76,47 @@ class Sudoku{
 		return true;
 	}
 
-	solveSudoku(boardData){
-		if(this.checkIsBoardFull(boardData) === true){
-			return true;
+	// for moving backward
+	getPreviousColumnCoordinate(row, column, boardData){
+		if(column === 0 && row === 0){
+			return false;
 		}
-	
-		let blankSudokuSpace = this.checkIsBoardFull(boardData);
-		let row = blankSudokuSpace[0];
-		let col = blankSudokuSpace[1];
-	
-		for(let num = 1 ; num <=9 ; num++){
-			if(this.checkIfNumPlacementIsValid(boardData,row,col,num)){
-				boardData[row][col] = num;
-	
-				if(this.solveSudoku(boardData)){
-					return true;
+		else if(column === 0){
+			return [row-1, boardData.length-1];
+		}
+		else if(row === 0){
+			return [0, column];
+		}
+		else{
+			return [row-1, column-1];
+		}
+	}
+
+	solveSudoku(boardData){
+
+		while(this.checkIsBoardFull(boardData) !== true){
+			let emptySpaces = this.checkIsBoardFull(boardData);
+			
+			let row = emptySpaces[0];
+			let column = emptySpaces[1];
+
+			let previous = this.getPreviousColumnCoordinate(row,column, boardData);
+
+			let previousRow = previous[0];
+			let previousColumn = previous[1];
+
+			for(let i = 1 ;i <=9; i++){
+				if(this.checkIfNumPlacementIsValid(boardData, row, column,i)){
+					boardData[emptySpaces[0]][emptySpaces[1]] = i;
+					this.solveSudoku(boardData);
 				}
-	
-				boardData[row][col] = " ";
+				
+
+				boardData[emptySpaces[0]][emptySpaces[1]] = " ";
+				
 			}
 		}
-		return false;
+
 	}
 
 	printBoard(boardData){
@@ -115,17 +135,20 @@ class Sudoku{
 	}
 
 	solve(){
-		let boardSolved = this.solveSudoku(this.boardInitial.slice());
+		this.solveSudoku(this.boardInitial);
+		let boardSolved = this.boardInitial;
 		return this.printBoard(boardSolved);
 	}
 }
 
 // The file has newlines at the end of each line,
 // so we call split to remove it (\n)
-var fs = require('fs');
-var board_string = fs.readFileSync('set-01_sample.unsolved.txt')
-  .toString()
-  .split("\n")[13];
+//var fs = require('fs');
+//var board_string = fs.readFileSync('set-01_sample.unsolved.txt')
+//  .toString()
+//  .split("\n")[0];
+
+var board_string = "53  7    6  195    98    6 8   6   34  8 3  17   2   6 6    28    419  5    8  79";
 
 var game = new Sudoku(board_string);
 
