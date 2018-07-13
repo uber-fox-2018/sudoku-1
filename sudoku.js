@@ -3,23 +3,7 @@
 class Sudoku {
   constructor(board_string){
     this.dataSample = board_string;
-    // this.mainBoard = this.board()
-    // this.zeros = this.coordZero();
   }
-
-  // solve(){
-  //   let mainBoard = this.mainBoard
-  //   for(let i = 0; i<mainBoard.length; i++){
-  //     for(let j = 0; j<mainBoard[i].length; j++){
-  //       if(this.checkCoord(mainBoard)){
-
-  //       }
-
-  //     }
-  //   }
-  //   // console.log(mainBoard)
-
-  // }
 
   coordZero(){
     let result = []
@@ -44,9 +28,7 @@ class Sudoku {
   solve(){
     let board = this.board()
     let zeroCoord = this.coordZero()
-    // let kamus = [1,2,3,4,5,6,7,8,9]
     let status = false
-    // let i = 0;
     for(let i = 0; i < zeroCoord.length; i++){
       status = false;
       let coordX = zeroCoord[i][0]
@@ -66,28 +48,10 @@ class Sudoku {
           number++
         }
       }
-      // if(status === false){
-      //   board[coordX][coordY] = 0
-      //   i--
-      // }else{
-      //   i++
-      // }
+      
     }
     console.log(board)
-    // return board
-    // console.log(board[zeroCoord[0][0]][zeroCoord[0][1]])
-    // console.log(this.coordZero());
-    // console.log(this.board())
-    // for(let i = 0; i<zeroCoord.length; i++){
-    //   // console.log(zeroCoord[i])
-    //   let coordX = zeroCoord[i][0];
-    //   let coordY = zeroCoord[i][1];
-    //   if(board[zeroCoord[i][0]][zeroCoord[i][1]]){
-    //   }
-    // }
-    // if(board[zeroCoord[][]][zeroCoord[][]]){
-
-    // }
+    return ''   
   }
 
   checkRow(board,coordX,number){
