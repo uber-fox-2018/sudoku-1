@@ -147,7 +147,23 @@ class Sudoku {
     }
   }
 
-  solve() {}
+  solve() {
+    let board = this.convertToArray()
+    let zero_array = this.check0value
+
+    for (let i = 0; i < zero_array.length; i++) {
+      let zero_kordinat = zero_array[i]
+      let row = zero_kordinat[0]
+      let col = zero_kordinat[1]
+      for (let number = 1; number <= 9; number++) {
+        if (this.combinationCheck(row,col,number) === true) {
+          board[row][col] = number
+
+        }
+      }
+    }
+
+  }
 
   // Returns a string representing the current state of the board
   board() {}
