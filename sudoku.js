@@ -2,17 +2,17 @@
 
 class Sudoku {
   constructor(board_string) {
-    this.sudoku_board = board_string
+    this.sudoku_board = this.convertToArray(board_string)
   }
 
-  convertToArray(){
+  convertToArray(string){
     let output = []
     let arrMid = []
     let size = 9
 
     for (let i = 0; i < size*size; i++) {
       // console.log(this.sudoku_board[i]);
-      arrMid.push(Number(this.sudoku_board[i]))
+      arrMid.push(Number(string[i]))
       if (arrMid.length === size) {
         output.push(arrMid)
         arrMid = []
@@ -22,7 +22,7 @@ class Sudoku {
   }
 
   createBoard(){
-    let board = this.convertToArray()
+    let board = this.sudoku_board
     let pembatas = '-----------------------------'
     let boardOutput = ''
 
@@ -44,7 +44,7 @@ class Sudoku {
   }
 
   check0value(){
-    let board = this.convertToArray()
+    let board = this.sudoku_board
     let array0 = []
   
     for (let i = 0; i < board.length; i++) {
@@ -62,7 +62,7 @@ class Sudoku {
 
   checkHorizontal(row,col,value){
     // let zero_value = this.check0value()
-    let board = this.convertToArray()
+    let board = this.sudoku_board
     board[row][col] = value
 
     for (let i = 0; i < board.length; i++) {
@@ -77,7 +77,7 @@ class Sudoku {
   }
 
   checkVertical(row,col,value){
-    let board = this.convertToArray()
+    let board = this.sudoku_board
     board[row][col] = value
 
     for (let i = 0; i < board.length; i++) {
@@ -91,12 +91,12 @@ class Sudoku {
   }
 
   check3x3(row,col,value){
-    let board = this.convertToArray()
+    let board = this.sudoku_board
 
     let boxRow = 0
     let boxCol = 0
 
-    if (row <= 2 && row >= 0 && col <= 2 && col >= 0) {
+    if (row <= 2 && col <= 2) {
       boxRow = 0
       boxCol = 0
     }else if (row <= 2 && col <= 5) {
@@ -125,13 +125,15 @@ class Sudoku {
       boxCol = 6
     }
 
+    // console.log(boxRow);
+    // console.log(boxCol);
+    
     for (let i = boxRow; i < boxRow+3; i++) {
       for (let j = boxCol; j < boxCol+3; j++) {
-        if (i !== row) {
-          if (j !== col) {
-            if (board[i][j] === value) {
-              return false
-            }
+        
+        if (i !== row || j !== col) {
+          if (board[i][j] == value) {
+            return false
           }
         }
       }
@@ -148,9 +150,15 @@ class Sudoku {
   }
 
   solve() {
-    let board = this.convertToArray()
-    let zero_array = this.check0value
-
+    let board = this.sudoku_board
+    let zero_array = this.check0value()
+    console.log(board);
+    
+    
+    if (zero_array == 0) {
+      return true
+    }
+    
     for (let i = 0; i < zero_array.length; i++) {
       let zero_kordinat = zero_array[i]
       let row = zero_kordinat[0]
@@ -158,11 +166,12 @@ class Sudoku {
       for (let number = 1; number <= 9; number++) {
         if (this.combinationCheck(row,col,number) === true) {
           board[row][col] = number
-
+          this.solve()
         }
       }
+      board[row][col] = 0
     }
-
+    return false
   }
 
   // Returns a string representing the current state of the board
@@ -177,17 +186,17 @@ var board_string = fs.readFileSync('set-01_sample.unsolved.txt')
   .split("\n")[0]
 
 var game = new Sudoku(board_string)
-console.log(game.createBoard());
-console.log(game.convertToArray());
-console.log(game.checkHorizontal(0,1,1));
-console.log(game.checkVertical(1,0,3));
-console.log(game.check3x3(5,1,1));
-
-
+// console.log(game.createBoard());
+// console.log(game.convertToArray());
+// console.log(game.checkHorizontal(0,1,1));
+// console.log(game.checkVertical(1,0,3));
+// console.log(game.check3x3(7,1,5));
+game.solve()
+// console.log(game.combinationCheck(0,8,5));
 
 
 // Remember: this will just fill out what it can and not "guess"
-// game.solve()
+
 
 // console.log(game.board())
 
