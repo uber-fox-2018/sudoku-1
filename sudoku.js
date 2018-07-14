@@ -17,8 +17,8 @@ class Sudoku {
 
       let trigger = false
       
-      while(!trigger){
-        if(this.checkHorizontal(posisiKosong[i],value,initBoard)){
+      while(!trigger && value <=9){
+        if(this.checkHorizontal(posisiKosong[i],value,initBoard) && this.checkVertikal(posisiKosong[i],value,initBoard)){
           initBoard[posX][posY] = value
           trigger = true
         } else{
@@ -36,11 +36,24 @@ class Sudoku {
   checkHorizontal(posisi,value,initBoard){
 
     for(let i = 0; i < initBoard.length; i++){
-      if (initBoard[posisi[0]][i] == value){
+      if (initBoard[posisi[0]][i] === value){
         return false
       }
     }
     return true
+
+  }
+
+  checkVertikal(posisi,value,initBoard){
+    for(let i = 0; i < initBoard.length; i++){
+      if (initBoard[i][posisi[1]] === value){
+        return false
+      }
+    }
+    return true
+  }
+
+  allMatchNumber(){
 
   }
 
@@ -52,13 +65,8 @@ class Sudoku {
     for(let i = 0; i < 9; i++){
       let temp = []
       for(let j = 0; j < 9; j++){
-        if(board_string[rulesPoint] == 0){
-          temp.push('0')
-          rulesPoint++
-        } else {
-          temp.push(Number(board_string[rulesPoint]))
-          rulesPoint++
-        }
+        temp.push(Number(board_string[rulesPoint]))
+        rulesPoint++
       }
       boardArena.push(temp)
     }
@@ -71,7 +79,7 @@ class Sudoku {
     
     for(let i = 0; i < this.displayboard.length; i++){
       for(let j = 0; j < this.displayboard.length; j++){
-        if(this.displayboard[i][j] === '0'){
+        if(this.displayboard[i][j] === 0){
           let temp = []
           temp.push(i)
           temp.push(j)
@@ -82,6 +90,7 @@ class Sudoku {
     }
     return resultKoordinat
   }
+
 
 }
 
@@ -97,5 +106,4 @@ var game = new Sudoku(board_string)
 // Remember: this will just fill out what it can and not "guess"
 // game.solve()
 console.log(game.solve())
-
-// console.log(game.checkHorizontal())
+// console.log(game.board())
