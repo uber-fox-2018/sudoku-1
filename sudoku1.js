@@ -15,6 +15,9 @@ class Sudoku {
   		let numString='123456789'
   		right(arr,row,col)
 
+      /*
+      Memandingkan angka (horizontal) 'fixed'
+      */
 
   		function right(arrRight,rowRight,colRight){
   			let tempNum = []
@@ -32,6 +35,10 @@ class Sudoku {
   			bottom(tempNum,rowRight,colRight)
   		}
 
+      /*
+      Memandingkan angka (vertical) 'fixed'
+      */
+
   		function bottom(arrBottom,rowBottom,colBottom){
   			for (let a = 0 ; a < arrBottom.length ; a++){
   				for (let b = 0 ; b < arr.length ; b++){
@@ -44,40 +51,36 @@ class Sudoku {
   			}
         
         /*
-          ==============================
-          HORIZONTAL & VERTICAL MATRIKS FIXED
-          - UNCOMMENT BELLOW TO CHECK IT & COMMENT SQUARE FUNCTION
-          ==============================
-                        |
-                        |
+          ============================
+          VERTICAL & HORIZONTAL FIXED
+          ============================
         */
 
-        // console.log(arrBottom)
-        // if (arrBottom.length !== 0){
-        //   papan[rowBottom][colBottom] = arrBottom[0]
-        // }
-        // console.log(papan)
-
-  			square(arrBottom, rowBottom, colBottom)
-  		}
-
-  		function square(arrSquare, rowSquare, colSquare){
-        console.log('rowSquare',rowSquare)
-        console.log('colSquare',colSquare)
-        console.log(papan)
-        console.log(arrSquare)
         console.log('\n')
-        for (let i = 0 ; i < papan.length ; i++){
-          for (let j = 0 ; j < papan[i].length ; j++){
-            for (let k = 0 ; k < k < arrSquare.length ; k++){
-              
-            }
-          }
+        if (arrBottom.length !== 0){
+          papan[rowBottom][colBottom] = arrBottom[0]
         }
+        console.log(papan)
 
+  			// square(arrBottom, rowBottom, colBottom)
   		}
-  		return arr
-  	}
+
+  	// 	function square(arrSquare, rowSquare, colSquare){
+   //      // console.log('rowSquare',rowSquare)
+   //      // console.log('colSquare',colSquare)
+   //      // console.log(papan)
+   //      // console.log(arrSquare)
+   //      // console.log('\n')
+   //      for (let i = 0 ; i < papan.length ; i++){
+   //        for (let j = 0 ; j < papan[i].length ; j++){
+   //          for (let k = 0 ; k < k < arrSquare.length ; k++){
+   //            if (arrSquare[k])
+   //          }
+   //        }
+   //      }
+  	// 	}
+  	// 	return arr
+  	// }
   	
   	for (let i = 0 ; i < papan.length ; i++){
   		for (let j = 0 ; j < papan[i].length ; j++){
@@ -86,13 +89,9 @@ class Sudoku {
 
   			}	
       }
-        // console.log(papan)
   	}
-  	// return
-
   }
   
-  // Returns a string representing the current state of the board
   board() {
   	let arr=[]
   	let count =0
@@ -113,8 +112,6 @@ class Sudoku {
   }
 }
 
-// The file has newlines at the end of each line,
-// so we call split to remove it (\n)
 var fs = require('fs')
 
 var board_string = fs.readFileSync('set-01_sample.unsolved.txt')
