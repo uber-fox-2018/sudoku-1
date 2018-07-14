@@ -2,30 +2,31 @@
 
 class Sudoku {
   constructor(board_string) {
-    this.string = Number(board_string)
-    this.sudokuBoard = this.boardArray(board_string)
+    this.string = board_string
+    this.sudokuBoard = this.sudokuBoard(board_string)
     this.emptyCoordinate = this.emptyCoordinate(this.sudokuBoard)
   }
 
-  boardArray(string) {
+  sudokuBoard(string) {
     let outputBoard = [] 
-    let filledBoard = []
+    let counter = 0
 
-    for (let i in string) {
-      filledBoard.push(string[i])
-      if (filledBoard.length == 9) {
-        outputBoard.push(filledBoard)
-        filledBoard = []
+    for (let i = 0; i < 9; i++) {
+      let filledBoard = []
+      for (let j = 0; j < 9 ; j++) {
+        filledBoard.push(Number(string[counter]))
+        counter+=1
       }
+      outputBoard.push(filledBoard)
     }
     return outputBoard
   }
 
-  emptyCoordinate(sudokuBoard) {
+  emptyCoordinate() {
     let emptyPosition = []
-    for (let i in sudokuBoard) {
-      for (let j in sudokuBoard[i]) { 
-        if (sudokuBoard[i][j] == 0) {
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if(this.sudokuBoard[i][j] === 0) {
           emptyPosition.push([i,j])
         }
       }
@@ -57,7 +58,7 @@ class Sudoku {
 
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        if (sudokuBoard[i+boxRow][j+boxCol] === value) {
+        if (sudokuBoard[i + boxRow][j + boxCol] === value) {
           return false
         }
       }
@@ -76,13 +77,50 @@ class Sudoku {
   }
 
   solve() {
-    
+    for (let i = 0; i < this.emptyCoordinate.length;) {
+      let row = this.emptyCoordinate[i][0]
+      let col = this.emptyCoordinate[i][1]
+      let isSolved = false
+      let value = this.sudokuBoard[row][col]
+      while (isSolved === false && value <= 9) {
+        if(this.checkAllCondition(this.sudokuBoard, row, col, value)) {
+          this.sleep(100)
+          this.boardReset()
+          console.log(this.sudokuBoard)
+          isSolved = true
+          this.sudokuBoard[row][col] = value
+          i++
+        } else {
+          value++
+        }
+      }
+
+      // Backtrack
+      if (isSolved === false) {
+        this.sudokuBoard[row][col] = 0
+        i--
+      }
+    }
+    console.log(`========================================`)
+    console.log(this.sudokuBoard)
+    console.log(`========================================`)
+    console.log(`Sudoku is solved`)
+    return ''
   }
 
-  // Returns a string representing the current state of the board
-  board() {
-
+  boardReset() {
+    console.log("\x1B[2J");
   }
+
+  sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+      if ((new Date().getTime() - start) > milliseconds) {
+        break;
+      }
+    }
+  }
+
 }
 
 // The file has newlines at the end of each line,
@@ -97,10 +135,10 @@ var game = new Sudoku(board_string)
 // Remember: this will just fill out what it can and not "guess"
 game.solve()
 
-console.log(`===================Sudoku board==========`)
-console.log(game.boardArray(board_string))
-console.log(`=========+Empty Coordinates================`)
-console.log(game.emptyCoordinate)
-console.log(game.checkRow(board_string, 0, 1))
-//console.log(game.sudokuBoard)
-//console.log(game.board())
+// console.log(`===================Sudoku board==========`)
+//console.log(game.boardArray(board_string))
+// console.log(`=========+Empty Coordinates================`)
+// onsole.log(game.blank)
+// console.log(game.checkRow(board_string, 0, 1))
+// console.log(game.sudokuBoard)
+
