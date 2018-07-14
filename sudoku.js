@@ -56,9 +56,9 @@ class Sudoku {
     let boxRow = Math.floor(row/3) * 3
     let boxCol = Math.floor(col/3) * 3
 
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        if (sudokuBoard[i + boxRow][j + boxCol] === value) {
+    for (let i = 0; i < boxRow + 3; i++) {
+      for (let j = 0; j < boxCol + 3; j++) {
+        if (sudokuBoard[boxRow][boxCol] === value) {
           return false
         }
       }
