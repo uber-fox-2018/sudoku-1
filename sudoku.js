@@ -33,8 +33,8 @@ class Sudoku {
     return emptyPosition
   }
 
-  checkRow(sudokuBoard, row, value) {
-    for (let i in sudokuBoard[row]) { // i < 9
+  checkRow(sudokuBoard, row, value) { // value = number in the same row
+    for (let i in sudokuBoard[row]) { // i = column
       if (sudokuBoard[row][i] === value) {
         return false
       }
@@ -44,14 +44,40 @@ class Sudoku {
 
   checkColumn (sudokuBoard, col, value) {
     for (let i in sudokuBoard) {
-      if (sudokuBoard[i][col] === value) {
+      if (sudokuBoard[i][col] === value) { // i = row
         return false
       }
     }
     return true
   }
 
-  solve() {}
+  check3x3Box(sudokuBoard, row, col, value) {
+    let boxRow = Math.floor(row/3) * 3
+    let boxCol = Math.floor(col/3) * 3
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (sudokuBoard[i+boxRow][j+boxCol] === value) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
+  checkAllCondition(sudokuBoard, row, col, value) {
+    if (this.checkRow(sudokuBoard, row, value) && 
+    this.checkColumn(sudokuBoard, col, value) &&
+    this.check3x3Box(sudokuBoard, row, col, value)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  solve() {
+    
+  }
 
   // Returns a string representing the current state of the board
   board() {
