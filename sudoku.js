@@ -29,36 +29,48 @@ class Sudoku {
     let board = this.board()
     let zeroCoord = this.coordZero()
     let status = false
-    for(let i = 0; i < zeroCoord.length; i++){
+    let i = 0
+    // console.log(zeroCoord)
+    while (i < zeroCoord.length){
       status = false;
       let coordX = zeroCoord[i][0]
       // console.log(coordX)
       let coordY = zeroCoord[i][1]
       // console.log(coordY)
-      let number = 1;
+      let number = board[coordX][coordY];
       while(!status && number<=9){
-        if(this.checkRow(board,coordX,coordY,number && this.checkCol(board,coordY,number) && this.checkBox(board,coordX,coordY,number))){
+        // console.log(` coord x,y di solve----->${coordX},${coordY} `)
+        if(this.checkRow(board,coordX,number) && this.checkCol(board,coordY,number) && this.checkBox(board,coordX,coordY,number)){
         // && this.checkCol(board,coordY,number) && this.checkBox(board,coordX,coordY,number))){
           status = true
-          console.log('ini board',board[coordX][coordY])
-          console.log('ini number',number)
+          // console.log('---ini number di solve',number)
+          // console.log('---ini board di solve',board[coordX][coordY])
           board[coordX][coordY] = number;
-          number = 1
+          // number = 1
         }else{
           number++
+          // console.log('---ini number di solve yg di ++',number)
         }
       }
-      
+      if(status == false){
+        board[coordX][coordY] = 0
+        i--
+      }else{
+        i++
+      }
     }
     console.log(board)
     return ''   
   }
 
   checkRow(board,coordX,number){
-    for(let i = 0; i<board[coordX].length; i++){
-      if(board[coordX][i] === number ){
-        // console.log('ini boardcoord', board[coordX][i])
-        // console.log('ini number', number)
+    // console.log(number);
+    
+    for(let i = 0; i<9; i++){
+      if(number === board[coordX][i] ){
+        // console.log(`coord x,y di row ----> ${coordX},${i}`);
+        // console.log('ini nilai dari coord board di checkrow ',board[coordX][i]);
+        
         return false
       }
     }
@@ -66,8 +78,10 @@ class Sudoku {
   }
 
   checkCol(board,coordY,number){
-    for(let i = 0; i<board.length ; i++){
-      if(board[i][coordY] === number){
+    for(let i = 0; i<9 ; i++){
+      if( number === board[i][coordY]){
+        // console.log(`coord x,y di col ----> ${i},${coordY}`);
+        // console.log('ini nilai dari coord board di checkcol ',board[i][coordY]);
         return false
       }
     }
@@ -75,11 +89,11 @@ class Sudoku {
   }
 
   checkBox(board,coordX,coordY,number){
-    let rowBox = Math.floor(coordX/3)*3;
-    let colBox = Math.floor(coordY/3)*3;
-    for(let i = rowBox; i<rowBox+3; i++){
-      for(let j = colBox; j<colBox+3; j++){
-        if(board[i][j] === number){
+    for(let i = coordX; i<coordX+3; i++){
+      for(let j = coordY; j<coordY+3; j++){
+        if(board[coordX][coordY] === number){
+          // console.log(`coord x,y di box ===----> ${coordX},${coordY}`);
+        // console.log('ini nilai dari coord board di  === checkbox ',board[coordX][coordY]);
           return false
         }
       }
@@ -94,6 +108,7 @@ class Sudoku {
     let mainBoard = []
     let dataNumber = this.dataSample
     let indexData = 0
+    // let str =''
     // console.log(this.dataSample)
     for(let i = 0; i<9; i++ ){
       let row =[];
@@ -117,8 +132,9 @@ var board_string = fs.readFileSync('set-01_sample.unsolved.txt')
 var game = new Sudoku(board_string)
 
 // Remember: this will just fill out what it can and not "guess"
+console.log(game.board())
+console.log('=====================================')
 game.solve()
-// console.log(game.board())
 // game.checkCoord()
 // game.checkRow()
 
