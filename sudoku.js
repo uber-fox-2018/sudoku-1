@@ -97,4 +97,5 @@ var game = new Sudoku(board_string)
 // Remember: this will just fill out what it can and not "guess"
 // game.solve()
 console.log(game.solve())
+
 // console.log(game.checkHorizontal())
