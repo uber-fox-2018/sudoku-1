@@ -23,16 +23,6 @@
       *** dikarenakan nilai yang benar harus memiliki kondisi benar di 3 kondisi di atas maka kita buat fungsi cekKondisi()
           yang berisikan status dari 3 kondisi di atas, jika true semua return true jika tidak false
       *** function2 cek : horizontal () , vertikal (), boxMini ()
-    5) backtrack -> karena pada pengisian kotak dan pengecekan value yg di inputkan ke box probabiltynya tidak 100%
-       hanya 1 angka, bisa saja 3 angka berstatus true apa bila di inputkan hanya saja input yang dimasukan pastinya nilai
-       yg lebih kecil(karena looping dari 1-9) maka ada kemungkinan salah
-       ex : 2,3,4,7 merupakan angka yang status nya bisa true apabila di inputkan ke box
-            tetapi yang di inputkan 2, karena 2 memenuhi kondisi true pertama
-
-      *** probabilty nya kecil karena kondisi board numbernya masih sedikit 
-          pada saat dimasukin, pas udah jalan kondisi boardnya lebih banyak yang
-          membuat probabilty nya besar dan bisa mengkoreksi nilai input yang salah
-    6) jika fungsi backtrack sudah terpenuhi maka class sudoku dapat mereturn board yang sudah diisi
 
 ya gitulah ya kira kira workflownya..
 KAPOK PAKE X DAN Y !!! TERAKHIR DEH INI CAPE NYARI SALAHNYA
