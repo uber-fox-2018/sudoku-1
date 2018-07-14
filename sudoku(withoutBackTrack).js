@@ -85,7 +85,7 @@ class Sudoku {
     let targetBox = this.posisiTarget()
     console.clear()
     
-    for (let i=0 ; i < targetBox.length;) {
+    for (let i=0 ; i < targetBox.length;i++) {
       let posisiY = targetBox[i]['baris'];
       let posisiX = targetBox[i]['kolom'];
       
@@ -99,7 +99,7 @@ class Sudoku {
         if (this.cekKondisi(board,targetBox[i],value)){
           kondisi = true     
           board[posisiY][posisiX] = value
-          i++
+          
 
           // UNTUK TAMPILAN SAJA
           console.log('############ SUDOKU ############')
@@ -125,9 +125,10 @@ class Sudoku {
       
       if (kondisi == false) { //backtrack
         board[posisiY][posisiX] = 0
-        i--
+        
       }
     }
+
     console.log('############ SUDOKU ############')
     console.log('INITIAL BOARD')
     console.log(this.generateBoard())
