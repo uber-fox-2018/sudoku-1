@@ -87,7 +87,7 @@ class Sudoku {
           inserted = true;
           board[vPos][hPos] = num;
         } else {
-          num++; //move on to next number
+          num++;
         }
       }
       if (inserted === false) {
@@ -113,4 +113,3 @@ var game = new Sudoku(board_string)
 game.solve()
 
 console.log(game.board)
-// console.log(game.getZero);
