@@ -56,7 +56,7 @@ class Sudoku {
           temp.push('0')
           rulesPoint++
         } else {
-          temp.push(Number(board_string[rulesPoint]))
+          temp.push(board_string[rulesPoint])
           rulesPoint++
         }
       }
