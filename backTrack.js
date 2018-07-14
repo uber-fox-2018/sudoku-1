@@ -126,10 +126,31 @@ class Sudoku {
 
 	solve() {
 		var limit = 9;
-		var board = this.board;
-		var empty = this.empty;
 
-		return board;
+		for(let i = 0; i < this.empty.length;) {
+			let row = this.empty[i][0];
+			let col = this.empty[i][1];
+			let isSame = false;
+		
+			let num = this.board[row][col] + 1;
+			
+			while(isSame === false && num <= limit){
+				if(this.checkHVG(this.board, row, col, num)){
+					isSame = true;
+					this.board[row][col] = num;
+					i = i + 1;
+				} else {
+					num++;
+				}
+			}
+
+			if (isSame === false){
+				this.board[row][col] = 0;
+				i = i - 1;
+			}
+			
+		}
+		return this.board.join('\n');
 	}
 }
 
