@@ -5,7 +5,6 @@ const col = 9
 
 class Sudoku {
   constructor(board_string) {
-
   }
 
   solve() { 
@@ -118,10 +117,8 @@ var board_string = fs.readFileSync('set-01_sample.unsolved.txt')
   .toString()
   .split("\n")[0]
 
-
 var game = new Sudoku(board_string)
 
-// Remember: this will just fill out what it can and not "guess"
 game.solve()
 
 game.board()
